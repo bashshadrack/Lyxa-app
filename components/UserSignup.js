@@ -7,15 +7,36 @@ import {
   View,
   Image,
 } from "react-native";
+import PhoneInput from "react-native-phone-input";
+import CountryPicker from "react-native-country-picker-modal";
 
 class UserSignup extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       data: ["User", "Event's Provider"],
       checked: 0,
+      cca2: "",
     };
+    this.onPressFlag = this.onPressFlag.bind(this);
+    this.selectCountry = this.selectCountry.bind(this);
   }
+  componentDidMount() {
+    this.setState({
+      pickerData: this.phone.getPickerData(),
+    });
+  }
+
+  onPressFlag() {
+    this.countryPicker.openModal();
+  }
+
+  selectCountry(country) {
+    this.phone.selectCountry(country.cca2.toLowerCase());
+    this.setState({ cca2: country.cca2 });
+  }
+
   check = () => {
     var select = this.state.checked;
     switch (select) {
@@ -64,6 +85,28 @@ class UserSignup extends Component {
                 </View>
               );
             })}
+          </View>
+          <View style={styles.telphne}>
+            <Text style={styles.PhneData}>Phone</Text>
+            <PhoneInput
+              ref={(ref) => {
+                this.phone = ref;
+              }}
+              onChange={(value) => this.selectCountry(value)}
+              translation="eng"
+              cca2={this.state.cca2}
+              style={styles.phne}
+              textProps={{ placeholder: "Enter Mobile Number" }}
+            />
+
+            {/* <CountryPicker
+              ref={(ref) => {
+                this.countryPicker = ref;
+              }}
+              onChange={(value) => this.selectCountry(value)}
+              translation="eng"
+              cca2={this.state.cca2}
+            ></CountryPicker> */}
           </View>
         </View>
       </View>
@@ -128,6 +171,23 @@ const styles = StyleSheet.create({
     fontSize: 17,
     paddingLeft: 10,
     paddingTop: 10,
+  },
+  telphne: {
+    flexDirection: "row",
+  },
+  PhneData: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginLeft: 10,
+    marginTop: 24,
+  },
+  phne: {
+    marginTop: 20,
+    width: 290,
+    paddingLeft: 10,
+    marginLeft: 10,
+    height: 40,
+    backgroundColor: "#eeeef0",
   },
 });
 

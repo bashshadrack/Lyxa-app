@@ -48,7 +48,6 @@ class Phone extends Component {
           translation="eng"
           cca2={this.state.cca2}
         >
-          <View />
         </CountryPicker>
       </View>
     );
@@ -64,4 +63,4 @@ let styles = StyleSheet.create({
   },
 });
 
-module.exports = Phone;
+export default Phone;
